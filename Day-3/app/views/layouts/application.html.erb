@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Store</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <nav>
+      <a href="/">Store</a>
+
+      <% if authenticated? %>
+        <%= link_to "New Product", new_product_path %>
+        <%= button_to "Log Out", session_path, method: :delete %>
+      <% end %>
+    </nav>
+
+    <% if notice.present? %>
+      <p style="color: green"><%= notice %></p>
+    <% end %>
+
+    <% if alert.present? %>
+      <p style="color: red"><%= alert %></p>
+    <% end %>
+
+    <%= yield %>
+  </body>
+</html>
