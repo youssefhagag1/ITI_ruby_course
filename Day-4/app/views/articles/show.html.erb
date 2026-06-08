@@ -1,0 +1,30 @@
+<% if @article.archived? %>
+  <div class="flash-alert">⚠️ This article has been archived.</div>
+<% end %>
+
+<h1><%= @article.title %></h1>
+<small>By <strong><%= @article.user.username %></strong> &middot; <%= @article.created_at.strftime("%B %d, %Y") %></small>
+
+<% if @article.image.attached? %>
+  <div style="margin: 15px 0;">
+    <%= image_tag @article.image, style: "max-width:100%; border-radius:6px;" %>
+  </div>
+<% end %>
+
+<p style="margin-top:15px; line-height:1.7;"><%= @article.body %></p>
+
+<hr>
+
+<div style="display:flex; gap:10px; align-items:center;">
+  <% if logged_in? && @article.user == current_user %>
+    <%= link_to "Edit",   edit_article_path(@article), class: "btn btn-warning" %>
+    <%= button_to "Delete", article_path(@article), method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "btn btn-danger" %>
+  <% end %>
+
+  <% if logged_in? && @article.user != current_user && @article.published? %>
+    <%= button_to "Report", report_article_path(@article), method: :post, class: "btn" %>
+    <small>Reports: <%= @article.reports_count %></small>
+  <% end %>
+
+  <%= link_to "← Back", articles_path %>
+</div>
