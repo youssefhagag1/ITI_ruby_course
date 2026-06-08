@@ -1,0 +1,13 @@
+<h1>Login</h1>
+
+<%= form_with url: login_path do |f| %>
+  <label>Email</label>
+  <%= f.email_field :email, required: true %>
+
+  <label>Password</label>
+  <%= f.password_field :password, required: true %>
+
+  <%= f.submit "Login", class: "btn btn-primary" %>
+<% end %>
+
+<p>No account? <%= link_to "Register", register_path %></p>

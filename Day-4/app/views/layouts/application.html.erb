@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Blog App</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <style>
+      body { font-family: sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; }
+      nav { display: flex; gap: 12px; margin-bottom: 20px; border-bottom: 1px solid #ccc; padding-bottom: 10px; }
+      nav a { text-decoration: none; color: #333; }
+      .flash-notice { background: #d4edda; padding: 10px; border-radius: 4px; margin-bottom: 15px; }
+      .flash-alert  { background: #f8d7da; padding: 10px; border-radius: 4px; margin-bottom: 15px; }
+      .btn { padding: 6px 14px; border-radius: 4px; border: none; cursor: pointer; text-decoration: none; font-size: 14px; }
+      .btn-primary  { background: #007bff; color: #fff; }
+      .btn-danger   { background: #dc3545; color: #fff; }
+      .btn-warning  { background: #ffc107; color: #000; }
+      input[type=text], input[type=email], input[type=password], textarea {
+        width: 100%; padding: 8px; margin: 4px 0 12px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px;
+      }
+      label { font-weight: bold; display: block; }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <%= link_to "Home", root_path %>
+      <%= link_to "New Article", new_article_path if logged_in? %>
+      <span style="flex:1"></span>
+      <% if logged_in? %>
+        <span>Hello, <%= current_user.username %></span>
+        <%= button_to "Logout", logout_path, method: :delete, class: "btn" %>
+      <% else %>
+        <%= link_to "Login",    login_path %>
+        <%= link_to "Register", register_path %>
+      <% end %>
+    </nav>
+
+    <% if flash[:notice] %>
+      <div class="flash-notice"><%= flash[:notice] %></div>
+    <% end %>
+    <% if flash[:alert] %>
+      <div class="flash-alert"><%= flash[:alert] %></div>
+    <% end %>
+
+    <%= yield %>
+  </body>
+</html>
